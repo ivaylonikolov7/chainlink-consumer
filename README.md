@@ -1,43 +1,65 @@
-# Chainlink Consumer
+# Chainlink Plugin Fund Link
 
-A monorepo with fully Chainlink working end to end scenarios. There are tools and examples on how to interact with Chainlink network.
+A Hardhat plugin that transfers Link token between accounts.
 
-## Requirements
+## What
 
-- [NPM](https://www.npmjs.com/)
-- [YARN](https://yarnpkg.com/)
+This plugin will help you transfer Link token between accounts.
 
-## Project Structure
+## Installation
 
-| Package | Description |
-| --- | --- |
-| @appliedblockchain/chainlink-contracts |  Smart contracts consumers source code that interact with oracles and Chainlink coordinators.  |
-| @appliedblockchain/chainlink-dapp | Example of frontend application that read and update data of Chainlink smart contracts. |
-| @appliedblockchain/chainlink-eslint-config | Shareable eslint configuration used in every package of this monorepo. |
-| @appliedblockchain/chainlink-plugins-api-consumer | Plugin that extends Hardhat environment with utilities to interact with the API Consumer contract. |
-| @appliedblockchain/chainlink-plugins-price-consumer | Plugin that extends Hardhat environment with utilities to interact with the Price Consumer contract. |
-| @appliedblockchain/chainlink-plugins-random-number-consumer | Plugin that extends Hardhat environment with utilities to interact with the Verifiable Random Function Consumer contract. |
-| @appliedblockchain/chainlink-devops | Hardhat application that provides scripts to deploy and test the contracts. The plugins of this monorepo are setup in this package. |
+To install this plugin use:
 
-## Development Setup
-
-1. Install NodeJS 12.18 & Yarn
-2. Install repositories dependencies
-```
-$ yarn install
-```
-3. Build all packages
-```
-$ yarn build
+```bash
+npm install @appliedblockchain/chainlink-plugins-fund-link @nomiclabs/hardhat-ethers --save
 ```
 
-## Development Tips
-For more tips on how to build and test Chainlink, see the [documentation](https://docs.chain.link/docs/tutorials/).
+Import the plugin in your `hardhat.config.js`:
 
-## Contributing
-Chainlink's source code is licensed under the MIT License, and contributions are welcome.
+```js
+require("@appliedblockchain/chainlink-plugins-fund-link");
+```
 
-Thank you!
+Or if you are using TypeScript, in your `hardhat.config.ts`:
 
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
+```ts
+import "@appliedblockchain/chainlink-plugins-fund-link";
+```
+
+## Required plugins
+
+- [@nomiclabs/hardhat-ethers](https://github.com/nomiclabs/hardhat/tree/master/packages/hardhat-ethers)
+
+## Tasks
+
+This plugin adds a task to fund an account with Link token.
+
+Fund account with Link token.
+```
+npx hardhat fund-link --contract <contract address> --linkaddress <link contract address> --fundamount <fund amount>
+```
+
+The Link address and the fund amount parameters are optional. This plugin uses the official Link addresses as default. Check the default values on the [configuration file]("https://github.com/appliedblockchain/chainlink-consumer/tree/master/plugins/fund-link/src/config.ts").
+
+Example of funding on the Ethereum main network.
+```
+npx hardhat fund-link --contract 0xc0ffee254729296a45a3885639AC7E10F9d54979 --linkaddress 0x514910771af9ca656af840dff83e8264ecf986ca --fundamount 1000000000000000000
+```
+
+## Environment extensions
+
+This plugin adds the function to transfer the Link token between accounts to the Hardhat Runtime Environment.
+
+```
+hre.fundLink(hre,contractAddress);
+```
+
+## Configuration
+
+This plugin does not require configuration.
+
+## Usage
+
+There are no additional steps you need to take for this plugin to work.
+
+Install it and access the provided functions and the provided tasks through the Hardhat Runtime Environment anywhere you need it.
